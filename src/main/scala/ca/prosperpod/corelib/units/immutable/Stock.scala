@@ -1,22 +1,24 @@
 package ca.prosperpod.corelib.units.immutable
 
-import ca.prosperpod.corelib.indicators.immutable.RSI
+import ca.prosperpod.corelib.indicators.Indicator
 
 import scala.collection.immutable.HashMap
 
+@deprecated // NOT SAFE TO IMPLEMENT YET
 case class Stock(symbol: String, price: BigDecimal,
-                 private val rsiMap: HashMap[Int, RSI] = HashMap()
+                 private val indicators: HashMap[String, Indicator] = HashMap()
                 ) extends Serializable {
 
-  def nDayRSI(n: Int): Option[RSI] = rsiMap get n
+  def getIndicator[T >: Indicator](id: String): Option[T] =
+    indicators get id
 
-  def addRSI(n: Int, rsi: RSI): Stock = copy(rsiMap = rsiMap + (n -> rsi))
+  def setIndicator(id: String, indicator: Indicator): Stock =
+    copy(indicators = indicators + (id -> indicator))
 
-  override def toString: String = s"immutable.Stock($symbol, $price, $rsiMap)"
-}
+  /*
+  override def toString: String =
+    s"immutable.Stock($symbol, $price, $indicators)"
+  */
 
-object Stock {
-
-  def apply(symbol: String, price: BigDecimal): Stock = new Stock(symbol, price)
-
+  override def toString: String = "immutable." + super.toString
 }

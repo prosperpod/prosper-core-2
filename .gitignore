@@ -12,3 +12,7 @@ out/
 *.ipr
 *.iws
 
+# SBT
+project/target
+target
+
