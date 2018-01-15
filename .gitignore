@@ -13,6 +13,5 @@ out/
 *.iws
 
 # SBT
-project/target
-target
+target/
 
